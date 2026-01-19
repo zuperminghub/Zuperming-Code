@@ -772,25 +772,35 @@ return l.AddIcons(r,u)
 end
 
 function p.New(r,u,v)
-local x=Instance.new(r)
+    local x=Instance.new(r)
 
-for z,A in next,p.DefaultProperties[r]or{}do
-x[z]=A
-end
+    -- [FIX DI SINI] Bungkus dengan pcall agar properti yang diproteksi tidak bikin crash
+    for z,A in next,p.DefaultProperties[r]or{}do
+        pcall(function()
+            x[z]=A 
+        end)
+    end
 
-for z,A in next,u or{}do
-if z~="ThemeTag"then
-x[z]=A
-end
-if p.Localization and p.Localization.Enabled and z=="Text"then
-local B=string.match(A,"^"..p.Localization.Prefix.."(.+)")
-if B then
-local C=#p.LocalizationObjects+1
-p.LocalizationObjects[C]={TranslationId=B,Object=x}
+    for z,A in next,u or{}do
+        if z~="ThemeTag"then
+            -- [OPSIONAL] Bungkus ini juga biar lebih aman
+            pcall(function()
+                x[z]=A
+            end)
+        end
+        if p.Localization and p.Localization.Enabled and z=="Text"then
+            local B=string.match(A,"^"..p.Localization.Prefix.."(.+)")
+            if B then
+                local C=#p.LocalizationObjects+1
+                p.LocalizationObjects[C]={TranslationId=B,Object=x}
 
-p.SetLangForObject(C)
-end
-end
+                p.SetLangForObject(C)
+            end
+        end
+    end
+    
+    -- Jangan lupa return x (biasanya ada di bawah fungsi ini)
+    return x 
 end
 
 for z,A in next,v or{}do
