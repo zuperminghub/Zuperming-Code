@@ -901,6 +901,55 @@ function ZuperMing:Window(GuiConfig)
     DropPageLayout.Archivable = false
     DropPageLayout.Name = "DropPageLayout"
     DropPageLayout.Parent = DropdownFolder
+
+    -- [[ KODE YANG HILANG (MULAI) ]] --
+    local DropdownContainer = Instance.new("Frame")
+    DropdownContainer.Size = UDim2.new(1, 0, 1, 0)
+    DropdownContainer.BackgroundTransparency = 1
+    DropdownContainer.Parent = DropdownFolder
+
+    local SearchBox = Instance.new("TextBox")
+    SearchBox.PlaceholderText = "Search"
+    SearchBox.Font = Enum.Font.Gotham
+    SearchBox.Text = ""
+    SearchBox.TextSize = 14
+    SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SearchBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    SearchBox.BackgroundTransparency = 0.9
+    SearchBox.BorderSizePixel = 0
+    SearchBox.Size = UDim2.new(1, 0, 0, 25)
+    SearchBox.Position = UDim2.new(0, 0, 0, 0)
+    SearchBox.ClearTextOnFocus = false
+    SearchBox.Name = "SearchBox"
+    SearchBox.Parent = DropdownContainer
+
+    local ScrollSelect = Instance.new("ScrollingFrame")
+    ScrollSelect.Size = UDim2.new(1, 0, 1, -30)
+    ScrollSelect.Position = UDim2.new(0, 0, 0, 30)
+    ScrollSelect.ScrollBarImageTransparency = 1
+    ScrollSelect.BorderSizePixel = 0
+    ScrollSelect.BackgroundTransparency = 1
+    ScrollSelect.ScrollBarThickness = 0
+    ScrollSelect.CanvasSize = UDim2.new(0, 0, 0, 0)
+    ScrollSelect.AutomaticCanvasSize = Enum.AutomaticSize.Y -- Optimasi
+    ScrollSelect.Name = "ScrollSelect"
+    ScrollSelect.Parent = DropdownContainer
+
+    local UIListLayout4 = Instance.new("UIListLayout")
+    UIListLayout4.Padding = UDim.new(0, 3)
+    UIListLayout4.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout4.Parent = ScrollSelect
+
+    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        local query = string.lower(SearchBox.Text)
+        for _, option in pairs(ScrollSelect:GetChildren()) do
+            if option.Name == "Option" and option:FindFirstChild("OptionText") then
+                local text = string.lower(option.OptionText.Text)
+                option.Visible = query == "" or string.find(text, query, 1, true)
+            end
+        end
+    end)
+    -- [[ KODE YANG HILANG (SELESAI) ]] --
     
     local Tabs = {}
     local CountTab = 0
