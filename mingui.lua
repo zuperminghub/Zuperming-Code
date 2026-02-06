@@ -577,6 +577,11 @@ function ZuperMing:Window(GuiConfig)
     UIListLayout.Padding = UDim.new(0, 3)
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout.Parent = ScrollTab
+    
+    -- [FIX SCROLL BUG: Add Padding Bottom]
+    local TabPadding = Instance.new("UIPadding")
+    TabPadding.Parent = ScrolLayers
+    TabPadding.PaddingBottom = UDim.new(0, 50) 
 
     local function CreateDialog(HostParent, TitleText, MsgText, OnYes)
         local Overlay = Instance.new("Frame")
@@ -969,8 +974,7 @@ function ZuperMing:Window(GuiConfig)
         UIListLayout1.SortOrder = Enum.SortOrder.LayoutOrder
         UIListLayout1.Parent = ScrolLayers
         
-        -- [FIX SCROLL BUG]
-        -- Add padding at the bottom of the scroll frame to prevent last item being cut off
+        -- [FIX SCROLL BUG: Add Padding Bottom]
         local TabPadding = Instance.new("UIPadding")
         TabPadding.Parent = ScrolLayers
         TabPadding.PaddingBottom = UDim.new(0, 50) 
@@ -1355,7 +1359,8 @@ function ZuperMing:Window(GuiConfig)
                 MainButton.MouseButton1Click:Connect(function()
                     if ButtonConfig.Confirm then
                         local TargetParent = DropShadowHolder or ZuperMingb 
-                        CreateDialog(TargetParent, "Confirmation", ButtonConfig.ConfirmText, ButtonConfig.Callback)
+                        -- [FIX] TargetParent untuk Dialog adalah Main agar centered
+                        CreateDialog(Main, "Confirmation", ButtonConfig.ConfirmText, ButtonConfig.Callback)
                     else
                         ButtonConfig.Callback()
                     end
@@ -1719,16 +1724,38 @@ function ZuperMing:Window(GuiConfig)
                     btnText.Name = "OptionText"
                     btnText.Text = "  " .. label
                     btnText.Size = UDim2.new(1,0,1,0)
-                    btnText.Font = Enum.Font.GothamBold
+                    btnText.Font = Enum.Font.GothamBold -- [FIXED FONT]
                     btnText.TextSize = 15 -- [FIXED SIZE]
                     btnText.TextColor3 = Color3.new(1,1,1)
                     btnText.BackgroundTransparency = 1
                     btnText.TextXAlignment = Enum.TextXAlignment.Left
                     
+                    -- Selection Visuals
+                    local ChooseFrame = Instance.new("Frame", btnFrame)
+                    ChooseFrame.BackgroundColor3 = GuiConfig.Color
+                    ChooseFrame.BorderSizePixel = 0
+                    ChooseFrame.Position = UDim2.new(0, 2, 0.5, 0)
+                    ChooseFrame.AnchorPoint = Vector2.new(0, 0.5)
+                    ChooseFrame.Size = UDim2.new(0, 0, 0, 0)
+                    
                     local trigger = Instance.new("TextButton", btnFrame)
                     trigger.Size = UDim2.new(1,0,1,0)
                     trigger.BackgroundTransparency = 1
                     trigger.Text = ""
+                    
+                    -- Check Initial Selection
+                    local isSelected = false
+                    if DropdownConfig.Multi then
+                        if table.find(DropdownFunc.Value, option) then isSelected = true end
+                    else
+                        if DropdownFunc.Value == option then isSelected = true end
+                    end
+                    
+                    if isSelected then
+                        ChooseFrame.Size = UDim2.new(0, 3, 0, 16)
+                        btnFrame.BackgroundTransparency = 0.9
+                        btnFrame.BackgroundColor3 = Color3.new(1,1,1)
+                    end
                     
                     trigger.MouseButton1Click:Connect(function()
                         if DropdownConfig.Multi then
@@ -1757,6 +1784,16 @@ function ZuperMing:Window(GuiConfig)
                     end
                     ConfigData[configKey] = DropdownFunc.Value
                     if DropdownConfig.Callback then DropdownConfig.Callback(DropdownFunc.Value) end
+                    
+                    -- Refresh Visuals if Menu Open
+                     if MoreBlur.Visible then
+                        for _, v in pairs(ScrollSelect:GetChildren()) do
+                            if v:IsA("Frame") then v:Destroy() end
+                        end
+                        for _, opt in pairs(DropdownFunc.Options) do
+                            DropdownFunc:AddOption(opt)
+                        end
+                    end
                 end
                 
                 function DropdownFunc:SetValues(newList)
