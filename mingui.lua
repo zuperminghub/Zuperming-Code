@@ -71,7 +71,7 @@ local function safeSize(pxWidth, pxHeight)
     return UDim2.new(scaleX, 0, scaleY, 0)
 end
 
--- [[ OPTIMIZED DRAGGING (NO TWEEN) ]] --
+-- [[ OPTIMIZED DRAGGING ]] --
 local function MakeDraggable(topbarobject, object)
     local Dragging, DragInput, DragStart, StartPosition
 
@@ -342,7 +342,7 @@ function ZuperMing:Window(GuiConfig)
     local GuiFunc = {}
 
     local ZuperMingb = Instance.new("ScreenGui");
-    local Main = Instance.new("Frame"); -- [[ DIRECT PARENT, NO DROP SHADOW ]]
+    local Main = Instance.new("Frame");
     local UICorner = Instance.new("UICorner");
     local Top = Instance.new("Frame");
     local TextLabel = Instance.new("TextLabel");
@@ -368,7 +368,6 @@ function ZuperMing:Window(GuiConfig)
     ZuperMingb.ResetOnSpawn = false
     ZuperMingb.Parent = game:GetService("CoreGui")
 
-    -- [[ MAIN FRAME (Was inside DropShadow before) ]]
     Main.Name = "Main"
     Main.Parent = ZuperMingb
     Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
@@ -564,7 +563,6 @@ function ZuperMing:Window(GuiConfig)
     local ScrollTab = Instance.new("ScrollingFrame");
     local UIListLayout = Instance.new("UIListLayout");
 
-    -- [[ OPTIMIZATION 2: AUTOMATIC CANVAS SIZE ]] --
     ScrollTab.AutomaticCanvasSize = Enum.AutomaticSize.Y
     ScrollTab.CanvasSize = UDim2.new(0, 0, 0, 0)
     ScrollTab.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
@@ -580,7 +578,6 @@ function ZuperMing:Window(GuiConfig)
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout.Parent = ScrollTab
 
-    -- [[ OPTIMIZATION 4: HELPER UNTUK NATIVE CONFIRM ]] --
     local function CreateDialog(HostParent, TitleText, MsgText, OnYes)
         local Overlay = Instance.new("Frame")
         Overlay.Size = UDim2.new(1, 0, 1, 0)
@@ -597,8 +594,6 @@ function ZuperMing:Window(GuiConfig)
         Dialog.ZIndex = 51
         Dialog.Parent = Overlay
         Instance.new("UICorner", Dialog).CornerRadius = UDim.new(0, 8)
-
-        -- REMOVED GLOW FOR PERFORMANCE --
 
         local Title = Instance.new("TextLabel")
         Title.Size = UDim2.new(1, 0, 0, 40)
@@ -819,7 +814,7 @@ function ZuperMing:Window(GuiConfig)
 
     GuiFunc:ToggleUI()
 
-    MakeDraggable(Top, Main) -- FIXED TARGET
+    MakeDraggable(Top, Main) 
 
     local MoreBlur = Instance.new("Frame");
     local UICorner28 = Instance.new("UICorner");
@@ -836,8 +831,6 @@ function ZuperMing:Window(GuiConfig)
     MoreBlur.Visible = false
     MoreBlur.Name = "MoreBlur"
     MoreBlur.Parent = Layers
-
-    -- REMOVED SHADOW HOLDER 1 --
 
     UICorner28.Parent = MoreBlur
 
@@ -901,8 +894,8 @@ function ZuperMing:Window(GuiConfig)
     DropPageLayout.Archivable = false
     DropPageLayout.Name = "DropPageLayout"
     DropPageLayout.Parent = DropdownFolder
-
-    -- [[ KODE YANG HILANG (MULAI) ]] --
+    
+    -- [[ FIXED: Dropdown Scroll Components ]] --
     local DropdownContainer = Instance.new("Frame")
     DropdownContainer.Size = UDim2.new(1, 0, 1, 0)
     DropdownContainer.BackgroundTransparency = 1
@@ -931,7 +924,7 @@ function ZuperMing:Window(GuiConfig)
     ScrollSelect.BackgroundTransparency = 1
     ScrollSelect.ScrollBarThickness = 0
     ScrollSelect.CanvasSize = UDim2.new(0, 0, 0, 0)
-    ScrollSelect.AutomaticCanvasSize = Enum.AutomaticSize.Y -- Optimasi
+    ScrollSelect.AutomaticCanvasSize = Enum.AutomaticSize.Y
     ScrollSelect.Name = "ScrollSelect"
     ScrollSelect.Parent = DropdownContainer
 
@@ -949,8 +942,7 @@ function ZuperMing:Window(GuiConfig)
             end
         end
     end)
-    -- [[ KODE YANG HILANG (SELESAI) ]] --
-    
+
     local Tabs = {}
     local CountTab = 0
     local CountDropdown = 0
@@ -962,7 +954,6 @@ function ZuperMing:Window(GuiConfig)
         local ScrolLayers = Instance.new("ScrollingFrame");
         local UIListLayout1 = Instance.new("UIListLayout");
 
-        -- [[ OPTIMIZED: Auto Canvas Size ]]
         ScrolLayers.AutomaticCanvasSize = Enum.AutomaticSize.Y
         ScrolLayers.CanvasSize = UDim2.new(0, 0, 0, 0)
         ScrolLayers.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 80)
@@ -1122,10 +1113,10 @@ function ZuperMing:Window(GuiConfig)
         local CountSection = 0
         function Sections:AddSection(Title, AlwaysOpen)
             local Title = Title or "Title"
-            local Section = Instance.new("Frame")
-            local SectionDecideFrame = Instance.new("Frame")
-            local UICorner1 = Instance.new("UICorner")
-            local UIGradient = Instance.new("UIGradient")
+            local Section = Instance.new("Frame");
+            local SectionDecideFrame = Instance.new("Frame");
+            local UICorner1 = Instance.new("UICorner");
+            local UIGradient = Instance.new("UIGradient");
 
             Section.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             Section.BackgroundTransparency = 0.999 
@@ -1133,19 +1124,19 @@ function ZuperMing:Window(GuiConfig)
             Section.LayoutOrder = CountSection
             Section.ClipsDescendants = true
             
-            -- [FIX] Container Section tetap AutomaticSize agar scroll aman
+            -- [FIXED] Section Container uses AutoSize
             Section.Size = UDim2.new(1, 0, 0, 38)
             Section.AutomaticSize = Enum.AutomaticSize.Y 
             
             Section.Name = "Section"
             Section.Parent = ScrolLayers
 
-            local SectionReal = Instance.new("Frame")
-            local UICorner = Instance.new("UICorner")
-            local SectionButton = Instance.new("TextButton")
-            local FeatureFrame = Instance.new("Frame")
-            local FeatureImg = Instance.new("ImageLabel")
-            local SectionTitle = Instance.new("TextLabel")
+            local SectionReal = Instance.new("Frame");
+            local UICorner = Instance.new("UICorner");
+            local SectionButton = Instance.new("TextButton");
+            local FeatureFrame = Instance.new("Frame");
+            local FeatureImg = Instance.new("ImageLabel");
+            local SectionTitle = Instance.new("TextLabel");
 
             SectionReal.AnchorPoint = Vector2.new(0.5, 0)
             SectionReal.BackgroundColor3 = Color3.fromRGB(30, 30, 35) 
@@ -1207,17 +1198,17 @@ function ZuperMing:Window(GuiConfig)
             }
             UIGradient.Parent = SectionDecideFrame
 
-            --// Section Add Container
-            local SectionAdd = Instance.new("Frame")
-            local UICorner8 = Instance.new("UICorner")
-            local UIListLayout2 = Instance.new("UIListLayout")
+            --// Section Add
+            local SectionAdd = Instance.new("Frame");
+            local UICorner8 = Instance.new("UICorner");
+            local UIListLayout2 = Instance.new("UIListLayout");
 
             SectionAdd.AnchorPoint = Vector2.new(0.5, 0)
             SectionAdd.BackgroundTransparency = 1
             SectionAdd.LayoutOrder = 1
             SectionAdd.Position = UDim2.new(0.5, 0, 0, 38)
             SectionAdd.Size = UDim2.new(1, 0, 0, 0)
-            SectionAdd.AutomaticSize = Enum.AutomaticSize.Y -- Container tetap auto
+            SectionAdd.AutomaticSize = Enum.AutomaticSize.Y
             SectionAdd.Name = "SectionAdd"
             SectionAdd.Parent = Section
 
@@ -1249,8 +1240,10 @@ function ZuperMing:Window(GuiConfig)
             if AlwaysOpen ~= true then
                 SectionButton.Activated:Connect(function()
                     CircleClick(SectionButton, Mouse.X, Mouse.Y)
+                    
                     OpenSection = not OpenSection
                     SectionAdd.Visible = OpenSection
+                    
                     if OpenSection then
                         TweenService:Create(FeatureImg, TweenInfo.new(0.2), { Rotation = 0 }):Play()
                         TweenService:Create(SectionDecideFrame, TweenInfo.new(0.2), { Size = UDim2.new(1, 0, 0, 2) }):Play()
@@ -1264,7 +1257,6 @@ function ZuperMing:Window(GuiConfig)
             local Items = {}
             local CountItem = 0
 
-            -- [[ PARAGRAPH: AUTO SIZE (DINAMIS) ]]
             function Items:AddParagraph(ParagraphConfig)
                 local ParagraphConfig = ParagraphConfig or {}
                 ParagraphConfig.Title = ParagraphConfig.Title or "Title"
@@ -1280,9 +1272,7 @@ function ZuperMing:Window(GuiConfig)
                 Paragraph.LayoutOrder = CountItem
                 Paragraph.Name = "Paragraph"
                 Paragraph.Parent = SectionAdd
-                -- Paragraph WAJIB AutoSize agar ngikutin text
-                Paragraph.AutomaticSize = Enum.AutomaticSize.Y
-                Paragraph.Size = UDim2.new(1, 0, 0, 0) 
+                Paragraph.AutomaticSize = Enum.AutomaticSize.Y -- Optimized for text
 
                 UICorner14.CornerRadius = UDim.new(0, 4)
                 UICorner14.Parent = Paragraph
@@ -1305,12 +1295,10 @@ function ZuperMing:Window(GuiConfig)
                 ParagraphContent.BackgroundTransparency = 1
                 ParagraphContent.Position = UDim2.new(0, 10, 0, 25)
                 ParagraphContent.TextWrapped = true
-                -- Content juga AutoSize
                 ParagraphContent.AutomaticSize = Enum.AutomaticSize.Y
                 ParagraphContent.Size = UDim2.new(1, -20, 0, 0)
                 ParagraphContent.Parent = Paragraph
                 
-                -- Padding Bawah
                 local pad = Instance.new("Frame", Paragraph)
                 pad.BackgroundTransparency = 1
                 pad.LayoutOrder = 100
@@ -1321,7 +1309,6 @@ function ZuperMing:Window(GuiConfig)
                 return {SetContent = function(self, v) ParagraphContent.Text = v end}
             end
 
-            -- [[ BUTTON: FIXED SIZE ]]
             function Items:AddButton(ButtonConfig)
                 ButtonConfig = ButtonConfig or {}
                 ButtonConfig.Title = ButtonConfig.Title or "Confirm"
@@ -1332,15 +1319,12 @@ function ZuperMing:Window(GuiConfig)
                 local Button = Instance.new("Frame")
                 Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                 Button.BackgroundTransparency = 0.935
-                -- Button kembali ke Ukuran Tetap (40px)
                 Button.Size = UDim2.new(1, 0, 0, 40)
                 Button.LayoutOrder = CountItem
                 Button.Parent = SectionAdd
-                
                 local UICorner = Instance.new("UICorner")
                 UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = Button
-                
                 local MainButton = Instance.new("TextButton")
                 MainButton.Font = Enum.Font.GothamBold
                 MainButton.Text = ButtonConfig.Title
@@ -1352,16 +1336,13 @@ function ZuperMing:Window(GuiConfig)
                 MainButton.Size = UDim2.new(1, -12, 1, -10)
                 MainButton.Position = UDim2.new(0, 6, 0, 5)
                 MainButton.Parent = Button
-                
                 local mainCorner = Instance.new("UICorner")
                 mainCorner.CornerRadius = UDim.new(0, 4)
                 mainCorner.Parent = MainButton
 
                 MainButton.MouseButton1Click:Connect(function()
                     if ButtonConfig.Confirm then
-                        -- Pastikan DropShadowHolder ada di script utama, atau ganti ke ZuperMingb
-                        local TargetParent = DropShadowHolder or ZuperMingb 
-                        CreateDialog(TargetParent, "Confirmation", ButtonConfig.ConfirmText, ButtonConfig.Callback)
+                        CreateDialog(Main, "Confirmation", ButtonConfig.ConfirmText, ButtonConfig.Callback)
                     else
                         ButtonConfig.Callback()
                     end
@@ -1370,7 +1351,6 @@ function ZuperMing:Window(GuiConfig)
                 CountItem = CountItem + 1
             end
 
-            -- [[ TOGGLE: SEMI-DYNAMIC ]]
             function Items:AddToggle(ToggleConfig)
                 local ToggleConfig = ToggleConfig or {}
                 ToggleConfig.Title = ToggleConfig.Title or "Title"
@@ -1398,9 +1378,8 @@ function ZuperMing:Window(GuiConfig)
                 Toggle.LayoutOrder = CountItem
                 Toggle.Name = "Toggle"
                 Toggle.Parent = SectionAdd
-                -- Toggle tetap AutoSize jaga-jaga deskripsi panjang
                 Toggle.AutomaticSize = Enum.AutomaticSize.Y
-                Toggle.Size = UDim2.new(1, 0, 0, 46) -- Min height
+                Toggle.Size = UDim2.new(1,0,0,46)
 
                 UICorner20.CornerRadius = UDim.new(0, 4)
                 UICorner20.Parent = Toggle
@@ -1488,7 +1467,7 @@ function ZuperMing:Window(GuiConfig)
                 return ToggleFunc
             end
 
-            -- [[ SLIDER: FIXED SIZE ]]
+            -- [[ FIXED: SLIDER RETURNED TO ORIGINAL LOOK ]] --
             function Items:AddSlider(SliderConfig)
                  local SliderConfig = SliderConfig or {}
                  SliderConfig.Title = SliderConfig.Title or "Slider"
@@ -1500,12 +1479,13 @@ function ZuperMing:Window(GuiConfig)
                  local Slider = Instance.new("Frame")
                  Slider.BackgroundColor3 = Color3.fromRGB(255,255,255)
                  Slider.BackgroundTransparency = 0.935
-                 -- Slider kembali Fixed Size agar rapi
-                 Slider.Size = UDim2.new(1,0,0,60) 
+                 Slider.Size = UDim2.new(1,0,0,60)
                  Slider.LayoutOrder = CountItem
                  Slider.Parent = SectionAdd
                  
                  local UICorner = Instance.new("UICorner", Slider)
+                 UICorner.CornerRadius = UDim.new(0,4)
+                 
                  local Title = Instance.new("TextLabel", Slider)
                  Title.Text = SliderConfig.Title
                  Title.Font = Enum.Font.GothamBold
@@ -1564,7 +1544,6 @@ function ZuperMing:Window(GuiConfig)
                     end
                  end)
                  
-                 -- Set initial
                  local startScale = (SliderFunc.Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
                  SliderDraggable.Size = UDim2.fromScale(startScale, 1)
 
@@ -1572,14 +1551,13 @@ function ZuperMing:Window(GuiConfig)
                  return SliderFunc
             end
             
-            -- [[ INPUT: FIXED SIZE ]]
+            -- [[ FIXED: INPUT RETURNED TO ORIGINAL LOOK ]] --
             function Items:AddInput(InputConfig)
                 local InputConfig = InputConfig or {}
                 local configKey = "Input_" .. (InputConfig.Title or "Input")
                 local InputFunc = {Value = InputConfig.Default or ""}
                 
                 local Input = Instance.new("Frame")
-                -- Input kembali Fixed Size (46px) agar tidak gepeng
                 Input.Size = UDim2.new(1,0,0,46)
                 Input.BackgroundTransparency = 0.935
                 Input.BackgroundColor3 = Color3.fromRGB(255,255,255)
@@ -1590,16 +1568,16 @@ function ZuperMing:Window(GuiConfig)
                 local Title = Instance.new("TextLabel", Input)
                 Title.Text = InputConfig.Title or "Input"
                 Title.Font = Enum.Font.GothamBold
-                Title.TextColor3 = Color3.fromRGB(230,230,230)
+                Title.TextColor3 = Color3.new(1,1,1)
                 Title.BackgroundTransparency = 1
                 Title.Position = UDim2.new(0,10,0,0)
                 Title.Size = UDim2.new(1,-20,1,0)
                 Title.TextXAlignment = Enum.TextXAlignment.Left
                 
                 local InputFrame = Instance.new("Frame", Input)
-                InputFrame.Size = UDim2.new(0, 140, 0, 30)
+                InputFrame.Size = UDim2.new(0, 148, 0, 30)
                 InputFrame.AnchorPoint = Vector2.new(1, 0.5)
-                InputFrame.Position = UDim2.new(1, -10, 0.5, 0)
+                InputFrame.Position = UDim2.new(1, -7, 0.5, 0)
                 InputFrame.BackgroundColor3 = Color3.fromRGB(255,255,255)
                 InputFrame.BackgroundTransparency = 0.95
                 Instance.new("UICorner", InputFrame).CornerRadius = UDim.new(0,4)
@@ -1611,7 +1589,7 @@ function ZuperMing:Window(GuiConfig)
                 TextBox.Font = Enum.Font.Gotham
                 TextBox.TextColor3 = Color3.new(1,1,1)
                 TextBox.Text = InputFunc.Value
-                TextBox.PlaceholderText = InputConfig.Placeholder or "Write here..."
+                TextBox.PlaceholderText = InputConfig.Placeholder or "Input Here"
                 TextBox.TextXAlignment = Enum.TextXAlignment.Left
                 
                 TextBox.FocusLost:Connect(function()
@@ -1620,22 +1598,29 @@ function ZuperMing:Window(GuiConfig)
                     if InputConfig.Callback then InputConfig.Callback(TextBox.Text) end
                 end)
                 
+                function InputFunc:Set(Value)
+                    TextBox.Text = Value
+                    InputFunc.Value = Value
+                    InputConfig.Callback(Value)
+                end
+
                 CountItem = CountItem + 1
+                Elements[configKey] = InputFunc
                 return InputFunc
             end
 
-            -- [[ DROPDOWN: FIXED SIZE + OVERLAY ]]
+            -- [[ FIXED: DROPDOWN ORIGINAL LOOK & API RESTORED ]] --
             function Items:AddDropdown(DropdownConfig)
                 local DropdownConfig = DropdownConfig or {}
                 DropdownConfig.Title = DropdownConfig.Title or "Dropdown"
                 DropdownConfig.Options = DropdownConfig.Options or {}
                 
-                local DropdownFunc = { Value = DropdownConfig.Default }
+                local DropdownFunc = { Value = DropdownConfig.Default, Options = DropdownConfig.Options }
+                local configKey = "Dropdown_" .. DropdownConfig.Title
                 
                 local Dropdown = Instance.new("Frame")
                 Dropdown.BackgroundTransparency = 0.935
                 Dropdown.BackgroundColor3 = Color3.fromRGB(255,255,255)
-                -- Dropdown kembali Fixed Size (46px)
                 Dropdown.Size = UDim2.new(1,0,0,46)
                 Dropdown.LayoutOrder = CountItem
                 Dropdown.Parent = SectionAdd
@@ -1644,26 +1629,43 @@ function ZuperMing:Window(GuiConfig)
                 local Title = Instance.new("TextLabel", Dropdown)
                 Title.Text = DropdownConfig.Title
                 Title.Font = Enum.Font.GothamBold
-                Title.TextColor3 = Color3.fromRGB(230,230,230)
+                Title.TextColor3 = Color3.new(1,1,1)
                 Title.BackgroundTransparency = 1
                 Title.Position = UDim2.new(0,10,0,0)
                 Title.Size = UDim2.new(1,-20,1,0)
                 Title.TextXAlignment = Enum.TextXAlignment.Left
+                
+                local SelectOptionsFrame = Instance.new("Frame", Dropdown)
+                SelectOptionsFrame.AnchorPoint = Vector2.new(1, 0.5)
+                SelectOptionsFrame.BackgroundTransparency = 0.95
+                SelectOptionsFrame.BackgroundColor3 = Color3.fromRGB(255,255,255)
+                SelectOptionsFrame.Position = UDim2.new(1, -7, 0.5, 0)
+                SelectOptionsFrame.Size = UDim2.new(0, 148, 0, 30)
+                Instance.new("UICorner", SelectOptionsFrame).CornerRadius = UDim.new(0, 4)
+                
+                local OptionSelecting = Instance.new("TextLabel", SelectOptionsFrame)
+                OptionSelecting.BackgroundTransparency = 1
+                OptionSelecting.Position = UDim2.new(0, 5, 0, 0)
+                OptionSelecting.Size = UDim2.new(1, -30, 1, 0)
+                OptionSelecting.Font = Enum.Font.GothamBold
+                OptionSelecting.Text = "Select..."
+                OptionSelecting.TextColor3 = Color3.new(1,1,1)
+                OptionSelecting.TextTransparency = 0.6
+                OptionSelecting.TextXAlignment = Enum.TextXAlignment.Left
+                
+                local OptionImg = Instance.new("ImageLabel", SelectOptionsFrame)
+                OptionImg.BackgroundTransparency = 1
+                OptionImg.Image = "rbxassetid://16851841101"
+                OptionImg.ImageColor3 = Color3.fromRGB(230, 230, 230)
+                OptionImg.Position = UDim2.new(1, -30, 0, 2)
+                OptionImg.Size = UDim2.new(0, 25, 0, 25)
                 
                 local Button = Instance.new("TextButton", Dropdown)
                 Button.Size = UDim2.new(1,0,1,0)
                 Button.BackgroundTransparency = 1
                 Button.Text = ""
                 
-                local Status = Instance.new("TextLabel", Dropdown)
-                Status.Text = "Select..."
-                Status.Font = Enum.Font.Gotham
-                Status.TextColor3 = Color3.fromRGB(150,150,150)
-                Status.BackgroundTransparency = 1
-                Status.Size = UDim2.new(0,100,1,0)
-                Status.Position = UDim2.new(1,-120,0,0)
-                Status.TextXAlignment = Enum.TextXAlignment.Right
-
+                -- [[ DROPDOWN LOGIC ]] --
                 Button.MouseButton1Click:Connect(function()
                     if not MoreBlur.Visible then
                         MoreBlur.Visible = true
@@ -1671,35 +1673,86 @@ function ZuperMing:Window(GuiConfig)
                         TweenService:Create(MoreBlur, TweenInfo.new(0.3), {BackgroundTransparency = 0.8}):Play()
                         TweenService:Create(DropdownSelect, TweenInfo.new(0.3), {Position = UDim2.new(1, -172, 0.5, 0)}):Play()
                         
-                        -- Clear old list
+                        -- Populate list
                         for _, v in pairs(ScrollSelect:GetChildren()) do
-                            if v:IsA("TextButton") then v:Destroy() end
+                            if v:IsA("Frame") then v:Destroy() end
                         end
                         ScrollSelect.CanvasSize = UDim2.new(0,0,0,0)
                         
-                        -- Populate list
-                        for _, opt in pairs(DropdownConfig.Options) do
-                            local btn = Instance.new("TextButton")
-                            btn.Parent = ScrollSelect
-                            btn.Size = UDim2.new(1,0,0,30)
-                            btn.Text = "  " .. tostring(opt)
-                            btn.Font = Enum.Font.Gotham
-                            btn.TextColor3 = Color3.new(1,1,1)
-                            btn.BackgroundTransparency = 1
-                            btn.TextXAlignment = Enum.TextXAlignment.Left
-                            
-                            btn.MouseButton1Click:Connect(function()
-                                DropdownConfig.Callback(opt)
-                                Status.Text = tostring(opt)
-                                -- Close menu animation can be added here
-                            end)
+                        for _, opt in pairs(DropdownFunc.Options) do
+                            DropdownFunc:AddOption(opt)
                         end
                     end
                 end)
                 
-                ScrollSelect.AutomaticCanvasSize = Enum.AutomaticSize.Y
+                function DropdownFunc:AddOption(option)
+                    local label = tostring(option)
+                    local btnFrame = Instance.new("Frame", ScrollSelect)
+                    btnFrame.Size = UDim2.new(1,0,0,30)
+                    btnFrame.BackgroundTransparency = 1
+                    btnFrame.Name = "Option"
+                    
+                    local btnText = Instance.new("TextLabel", btnFrame)
+                    btnText.Name = "OptionText"
+                    btnText.Text = "  " .. label
+                    btnText.Size = UDim2.new(1,0,1,0)
+                    btnText.Font = Enum.Font.GothamBold
+                    btnText.TextColor3 = Color3.new(1,1,1)
+                    btnText.BackgroundTransparency = 1
+                    btnText.TextXAlignment = Enum.TextXAlignment.Left
+                    
+                    local trigger = Instance.new("TextButton", btnFrame)
+                    trigger.Size = UDim2.new(1,0,1,0)
+                    trigger.BackgroundTransparency = 1
+                    trigger.Text = ""
+                    
+                    trigger.MouseButton1Click:Connect(function()
+                        if DropdownConfig.Multi then
+                            if not table.find(DropdownFunc.Value, option) then
+                                table.insert(DropdownFunc.Value, option)
+                            else
+                                for i, v in pairs(DropdownFunc.Value) do
+                                    if v == option then table.remove(DropdownFunc.Value, i) end
+                                end
+                            end
+                        else
+                            DropdownFunc.Value = option
+                        end
+                        DropdownFunc:Set(DropdownFunc.Value)
+                    end)
+                end
+                
+                function DropdownFunc:Set(Value)
+                    if DropdownConfig.Multi then
+                        DropdownFunc.Value = type(Value) == "table" and Value or {}
+                        OptionSelecting.Text = table.concat(DropdownFunc.Value, ", ")
+                        if #DropdownFunc.Value == 0 then OptionSelecting.Text = "Select Options" end
+                    else
+                        DropdownFunc.Value = Value
+                        OptionSelecting.Text = tostring(Value)
+                    end
+                    ConfigData[configKey] = DropdownFunc.Value
+                    if DropdownConfig.Callback then DropdownConfig.Callback(DropdownFunc.Value) end
+                end
+                
+                function DropdownFunc:SetValues(newList)
+                    DropdownFunc.Options = newList or {}
+                    DropdownFunc.Value = DropdownConfig.Multi and {} or nil
+                    OptionSelecting.Text = "Select..."
+                end
+                
+                function DropdownFunc:Clear()
+                    DropdownFunc.Options = {}
+                    DropdownFunc.Value = nil
+                    OptionSelecting.Text = "Select..."
+                end
+
+                -- Initialize
+                DropdownFunc.Options = DropdownConfig.Options
+                if DropdownConfig.Default then DropdownFunc:Set(DropdownConfig.Default) end
                 
                 CountItem = CountItem + 1
+                Elements[configKey] = DropdownFunc
                 return DropdownFunc
             end
 
@@ -1716,17 +1769,3 @@ function ZuperMing:Window(GuiConfig)
 end
 
 return ZuperMing
-
--- local Window = ZuperMing:Window()
-
--- Window:AddTab({
---     Name = "player",
---     Icon = "player",
--- }):AddSection("hello", 'close'):AddDropdown({
---         Title = "Select Island to Teleport",
---         Content = "Pilih pulau untuk teleport",
---         Options = {"awd","wdw"},
---         Default = "awd",
---         MultiSelect = false,
---         Callback = function(val) SelectedLocation = val end
---     })
