@@ -202,7 +202,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         local CalculationWidth = 280 
         local ContentBounds = TextService:GetTextSize(
             NotifyConfig.Content,
-            15, 
+            16, -- [FONT SIZE BESAR]
             Enum.Font.GothamBold,
             Vector2.new(CalculationWidth, 9999) 
         )
@@ -250,7 +250,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         TextLabel.Font = Enum.Font.GothamBold
         TextLabel.Text = NotifyConfig.Title
         TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TextLabel.TextSize = 14
+        TextLabel.TextSize = 16 -- [FONT SIZE BESAR]
         TextLabel.TextXAlignment = Enum.TextXAlignment.Left
         TextLabel.BackgroundTransparency = 1
         TextLabel.AutomaticSize = Enum.AutomaticSize.X
@@ -261,7 +261,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         TextLabel1.Font = Enum.Font.GothamBold
         TextLabel1.Text = NotifyConfig.Description
         TextLabel1.TextColor3 = NotifyConfig.Color
-        TextLabel1.TextSize = 14
+        TextLabel1.TextSize = 15 -- [FONT SIZE BESAR]
         TextLabel1.TextXAlignment = Enum.TextXAlignment.Left
         TextLabel1.BackgroundTransparency = 1
         TextLabel1.AutomaticSize = Enum.AutomaticSize.X
@@ -291,7 +291,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         TextLabel2.Font = Enum.Font.GothamBold
         TextLabel2.Text = NotifyConfig.Content
         TextLabel2.TextColor3 = Color3.fromRGB(180, 180, 180)
-        TextLabel2.TextSize = 15
+        TextLabel2.TextSize = 16 -- [FONT SIZE BESAR]
         TextLabel2.BackgroundTransparency = 1
         TextLabel2.TextXAlignment = Enum.TextXAlignment.Left
         TextLabel2.TextYAlignment = Enum.TextYAlignment.Top
@@ -425,7 +425,7 @@ function ZuperMing:Window(GuiConfig)
     TextLabel.Font = Enum.Font.GothamBold
     TextLabel.Text = GuiConfig.Title
     TextLabel.TextColor3 = GuiConfig.Color
-    TextLabel.TextSize = 15
+    TextLabel.TextSize = 16 -- [FONT SIZE BESAR]
     TextLabel.TextXAlignment = Enum.TextXAlignment.Center
     TextLabel.BackgroundTransparency = 1
     TextLabel.BorderSizePixel = 0
@@ -439,7 +439,7 @@ function ZuperMing:Window(GuiConfig)
     TextLabel1.Font = Enum.Font.GothamBold
     TextLabel1.Text = GuiConfig.Footer
     TextLabel1.TextColor3 = Color3.fromRGB(180, 180, 190)
-    TextLabel1.TextSize = 11
+    TextLabel1.TextSize = 12
     TextLabel1.TextXAlignment = Enum.TextXAlignment.Center
     TextLabel1.BackgroundTransparency = 1
     TextLabel1.BorderSizePixel = 0
@@ -697,7 +697,6 @@ function ZuperMing:Window(GuiConfig)
         Main.Visible = true
     end)
     
-    -- FIXED: Make draggable optimized
     local draggingIcon = false
     local dragStartIcon, startPosIcon
     
@@ -895,7 +894,6 @@ function ZuperMing:Window(GuiConfig)
     DropPageLayout.Name = "DropPageLayout"
     DropPageLayout.Parent = DropdownFolder
     
-    -- [[ FIXED: Dropdown Scroll Components ]] --
     local DropdownContainer = Instance.new("Frame")
     DropdownContainer.Size = UDim2.new(1, 0, 1, 0)
     DropdownContainer.BackgroundTransparency = 1
@@ -903,9 +901,9 @@ function ZuperMing:Window(GuiConfig)
 
     local SearchBox = Instance.new("TextBox")
     SearchBox.PlaceholderText = "Search"
-    SearchBox.Font = Enum.Font.Gotham
+    SearchBox.Font = Enum.Font.GothamBold -- [FIXED]
     SearchBox.Text = ""
-    SearchBox.TextSize = 14
+    SearchBox.TextSize = 15 -- [FIXED SIZE]
     SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
     SearchBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     SearchBox.BackgroundTransparency = 0.9
@@ -1019,7 +1017,7 @@ function ZuperMing:Window(GuiConfig)
         TabName.Font = Enum.Font.GothamBold
         TabName.Text = "| " .. tostring(TabConfig.Name)
         TabName.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TabName.TextSize = 15
+        TabName.TextSize = 16 -- [FIXED SIZE]
         TabName.TextXAlignment = Enum.TextXAlignment.Left
         TabName.BackgroundTransparency = 1
         TabName.Size = UDim2.new(1, 0, 1, 0)
@@ -1124,7 +1122,7 @@ function ZuperMing:Window(GuiConfig)
             Section.LayoutOrder = CountSection
             Section.ClipsDescendants = true
             
-            -- [FIXED] Section Container uses AutoSize
+            -- [FIX] Container Section tetap AutomaticSize agar scroll aman
             Section.Size = UDim2.new(1, 0, 0, 38)
             Section.AutomaticSize = Enum.AutomaticSize.Y 
             
@@ -1173,7 +1171,7 @@ function ZuperMing:Window(GuiConfig)
             SectionTitle.Font = Enum.Font.GothamBold
             SectionTitle.Text = Title
             SectionTitle.TextColor3 = Color3.fromRGB(230, 230, 230)
-            SectionTitle.TextSize = 15
+            SectionTitle.TextSize = 16 -- [FIXED SIZE]
             SectionTitle.TextXAlignment = Enum.TextXAlignment.Left
             SectionTitle.BackgroundTransparency = 1
             SectionTitle.Position = UDim2.new(0, 10, 0.5, 0)
@@ -1198,7 +1196,7 @@ function ZuperMing:Window(GuiConfig)
             }
             UIGradient.Parent = SectionDecideFrame
 
-            --// Section Add
+            --// Section Add Container
             local SectionAdd = Instance.new("Frame");
             local UICorner8 = Instance.new("UICorner");
             local UIListLayout2 = Instance.new("UIListLayout");
@@ -1208,7 +1206,7 @@ function ZuperMing:Window(GuiConfig)
             SectionAdd.LayoutOrder = 1
             SectionAdd.Position = UDim2.new(0.5, 0, 0, 38)
             SectionAdd.Size = UDim2.new(1, 0, 0, 0)
-            SectionAdd.AutomaticSize = Enum.AutomaticSize.Y
+            SectionAdd.AutomaticSize = Enum.AutomaticSize.Y -- Container tetap auto
             SectionAdd.Name = "SectionAdd"
             SectionAdd.Parent = Section
 
@@ -1240,10 +1238,8 @@ function ZuperMing:Window(GuiConfig)
             if AlwaysOpen ~= true then
                 SectionButton.Activated:Connect(function()
                     CircleClick(SectionButton, Mouse.X, Mouse.Y)
-                    
                     OpenSection = not OpenSection
                     SectionAdd.Visible = OpenSection
-                    
                     if OpenSection then
                         TweenService:Create(FeatureImg, TweenInfo.new(0.2), { Rotation = 0 }):Play()
                         TweenService:Create(SectionDecideFrame, TweenInfo.new(0.2), { Size = UDim2.new(1, 0, 0, 2) }):Play()
@@ -1257,6 +1253,7 @@ function ZuperMing:Window(GuiConfig)
             local Items = {}
             local CountItem = 0
 
+            -- [[ PARAGRAPH: AUTO SIZE (DINAMIS) ]]
             function Items:AddParagraph(ParagraphConfig)
                 local ParagraphConfig = ParagraphConfig or {}
                 ParagraphConfig.Title = ParagraphConfig.Title or "Title"
@@ -1272,7 +1269,9 @@ function ZuperMing:Window(GuiConfig)
                 Paragraph.LayoutOrder = CountItem
                 Paragraph.Name = "Paragraph"
                 Paragraph.Parent = SectionAdd
-                Paragraph.AutomaticSize = Enum.AutomaticSize.Y -- Optimized for text
+                -- Paragraph WAJIB AutoSize agar ngikutin text
+                Paragraph.AutomaticSize = Enum.AutomaticSize.Y
+                Paragraph.Size = UDim2.new(1, 0, 0, 0) 
 
                 UICorner14.CornerRadius = UDim.new(0, 4)
                 UICorner14.Parent = Paragraph
@@ -1280,25 +1279,27 @@ function ZuperMing:Window(GuiConfig)
                 ParagraphTitle.Font = Enum.Font.GothamBold
                 ParagraphTitle.Text = ParagraphConfig.Title
                 ParagraphTitle.TextColor3 = Color3.fromRGB(231, 231, 231)
-                ParagraphTitle.TextSize = 15
+                ParagraphTitle.TextSize = 16 -- [FIXED SIZE]
                 ParagraphTitle.TextXAlignment = Enum.TextXAlignment.Left
                 ParagraphTitle.BackgroundTransparency = 1
                 ParagraphTitle.Position = UDim2.new(0, 10, 0, 10)
                 ParagraphTitle.Size = UDim2.new(1, -16, 0, 13)
                 ParagraphTitle.Parent = Paragraph
 
-                ParagraphContent.Font = Enum.Font.Gotham
+                ParagraphContent.Font = Enum.Font.GothamBold -- [FIXED FONT]
                 ParagraphContent.Text = ParagraphConfig.Content
                 ParagraphContent.TextColor3 = Color3.fromRGB(255, 255, 255)
-                ParagraphContent.TextSize = 14
+                ParagraphContent.TextSize = 15 -- [FIXED SIZE]
                 ParagraphContent.TextXAlignment = Enum.TextXAlignment.Left
                 ParagraphContent.BackgroundTransparency = 1
                 ParagraphContent.Position = UDim2.new(0, 10, 0, 25)
                 ParagraphContent.TextWrapped = true
+                -- Content juga AutoSize
                 ParagraphContent.AutomaticSize = Enum.AutomaticSize.Y
                 ParagraphContent.Size = UDim2.new(1, -20, 0, 0)
                 ParagraphContent.Parent = Paragraph
                 
+                -- Padding Bawah
                 local pad = Instance.new("Frame", Paragraph)
                 pad.BackgroundTransparency = 1
                 pad.LayoutOrder = 100
@@ -1309,6 +1310,7 @@ function ZuperMing:Window(GuiConfig)
                 return {SetContent = function(self, v) ParagraphContent.Text = v end}
             end
 
+            -- [[ BUTTON: FIXED SIZE ]]
             function Items:AddButton(ButtonConfig)
                 ButtonConfig = ButtonConfig or {}
                 ButtonConfig.Title = ButtonConfig.Title or "Confirm"
@@ -1319,16 +1321,19 @@ function ZuperMing:Window(GuiConfig)
                 local Button = Instance.new("Frame")
                 Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                 Button.BackgroundTransparency = 0.935
+                -- Button kembali ke Ukuran Tetap (40px)
                 Button.Size = UDim2.new(1, 0, 0, 40)
                 Button.LayoutOrder = CountItem
                 Button.Parent = SectionAdd
+                
                 local UICorner = Instance.new("UICorner")
                 UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = Button
+                
                 local MainButton = Instance.new("TextButton")
                 MainButton.Font = Enum.Font.GothamBold
                 MainButton.Text = ButtonConfig.Title
-                MainButton.TextSize = 14
+                MainButton.TextSize = 16 -- [FIXED SIZE]
                 MainButton.TextColor3 = Color3.fromRGB(255, 255, 255)
                 MainButton.TextTransparency = 0.3
                 MainButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1336,13 +1341,15 @@ function ZuperMing:Window(GuiConfig)
                 MainButton.Size = UDim2.new(1, -12, 1, -10)
                 MainButton.Position = UDim2.new(0, 6, 0, 5)
                 MainButton.Parent = Button
+                
                 local mainCorner = Instance.new("UICorner")
                 mainCorner.CornerRadius = UDim.new(0, 4)
                 mainCorner.Parent = MainButton
 
                 MainButton.MouseButton1Click:Connect(function()
                     if ButtonConfig.Confirm then
-                        CreateDialog(Main, "Confirmation", ButtonConfig.ConfirmText, ButtonConfig.Callback)
+                        local TargetParent = DropShadowHolder or ZuperMingb 
+                        CreateDialog(TargetParent, "Confirmation", ButtonConfig.ConfirmText, ButtonConfig.Callback)
                     else
                         ButtonConfig.Callback()
                     end
@@ -1351,6 +1358,7 @@ function ZuperMing:Window(GuiConfig)
                 CountItem = CountItem + 1
             end
 
+            -- [[ TOGGLE: SEMI-DYNAMIC ]]
             function Items:AddToggle(ToggleConfig)
                 local ToggleConfig = ToggleConfig or {}
                 ToggleConfig.Title = ToggleConfig.Title or "Title"
@@ -1378,15 +1386,16 @@ function ZuperMing:Window(GuiConfig)
                 Toggle.LayoutOrder = CountItem
                 Toggle.Name = "Toggle"
                 Toggle.Parent = SectionAdd
+                -- Toggle tetap AutoSize jaga-jaga deskripsi panjang
                 Toggle.AutomaticSize = Enum.AutomaticSize.Y
-                Toggle.Size = UDim2.new(1,0,0,46)
+                Toggle.Size = UDim2.new(1, 0, 0, 46) -- Min height
 
                 UICorner20.CornerRadius = UDim.new(0, 4)
                 UICorner20.Parent = Toggle
 
                 ToggleTitle.Font = Enum.Font.GothamBold
                 ToggleTitle.Text = ToggleConfig.Title
-                ToggleTitle.TextSize = 15
+                ToggleTitle.TextSize = 16 -- [FIXED SIZE]
                 ToggleTitle.TextColor3 = Color3.fromRGB(231, 231, 231)
                 ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
                 ToggleTitle.BackgroundTransparency = 1
@@ -1397,7 +1406,7 @@ function ZuperMing:Window(GuiConfig)
                 ToggleContent.Font = Enum.Font.GothamBold
                 ToggleContent.Text = ToggleConfig.Content
                 ToggleContent.TextColor3 = Color3.fromRGB(255, 255, 255)
-                ToggleContent.TextSize = 14
+                ToggleContent.TextSize = 15 -- [FIXED SIZE]
                 ToggleContent.TextTransparency = 0.6
                 ToggleContent.TextXAlignment = Enum.TextXAlignment.Left
                 ToggleContent.BackgroundTransparency = 1
@@ -1467,7 +1476,7 @@ function ZuperMing:Window(GuiConfig)
                 return ToggleFunc
             end
 
-            -- [[ FIXED: SLIDER RETURNED TO ORIGINAL LOOK ]] --
+            -- [[ SLIDER: FIXED SIZE ]]
             function Items:AddSlider(SliderConfig)
                  local SliderConfig = SliderConfig or {}
                  SliderConfig.Title = SliderConfig.Title or "Slider"
@@ -1479,7 +1488,8 @@ function ZuperMing:Window(GuiConfig)
                  local Slider = Instance.new("Frame")
                  Slider.BackgroundColor3 = Color3.fromRGB(255,255,255)
                  Slider.BackgroundTransparency = 0.935
-                 Slider.Size = UDim2.new(1,0,0,60)
+                 -- Slider kembali Fixed Size agar rapi
+                 Slider.Size = UDim2.new(1,0,0,60) 
                  Slider.LayoutOrder = CountItem
                  Slider.Parent = SectionAdd
                  
@@ -1489,7 +1499,7 @@ function ZuperMing:Window(GuiConfig)
                  local Title = Instance.new("TextLabel", Slider)
                  Title.Text = SliderConfig.Title
                  Title.Font = Enum.Font.GothamBold
-                 Title.TextSize = 15
+                 Title.TextSize = 16 -- [FIXED SIZE]
                  Title.TextColor3 = Color3.new(1,1,1)
                  Title.BackgroundTransparency = 1
                  Title.Position = UDim2.new(0,10,0,10)
@@ -1514,6 +1524,8 @@ function ZuperMing:Window(GuiConfig)
                  ValueText.BackgroundTransparency = 1
                  ValueText.TextColor3 = Color3.new(1,1,1)
                  ValueText.Text = tostring(SliderFunc.Value)
+                 ValueText.TextSize = 15 -- [FIXED SIZE]
+                 ValueText.Font = Enum.Font.GothamBold -- [FIXED FONT]
                  
                  local Dragging = false
                  local function UpdateSlider(Input)
@@ -1544,6 +1556,7 @@ function ZuperMing:Window(GuiConfig)
                     end
                  end)
                  
+                 -- Set initial
                  local startScale = (SliderFunc.Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
                  SliderDraggable.Size = UDim2.fromScale(startScale, 1)
 
@@ -1569,6 +1582,7 @@ function ZuperMing:Window(GuiConfig)
                 Title.Text = InputConfig.Title or "Input"
                 Title.Font = Enum.Font.GothamBold
                 Title.TextColor3 = Color3.new(1,1,1)
+                Title.TextSize = 16 -- [FIXED SIZE]
                 Title.BackgroundTransparency = 1
                 Title.Position = UDim2.new(0,10,0,0)
                 Title.Size = UDim2.new(1,-20,1,0)
@@ -1586,7 +1600,8 @@ function ZuperMing:Window(GuiConfig)
                 TextBox.Size = UDim2.new(1,-10,1,0)
                 TextBox.Position = UDim2.new(0,5,0,0)
                 TextBox.BackgroundTransparency = 1
-                TextBox.Font = Enum.Font.Gotham
+                TextBox.Font = Enum.Font.GothamBold -- [FIXED FONT]
+                TextBox.TextSize = 15 -- [FIXED SIZE]
                 TextBox.TextColor3 = Color3.new(1,1,1)
                 TextBox.Text = InputFunc.Value
                 TextBox.PlaceholderText = InputConfig.Placeholder or "Input Here"
@@ -1630,6 +1645,7 @@ function ZuperMing:Window(GuiConfig)
                 Title.Text = DropdownConfig.Title
                 Title.Font = Enum.Font.GothamBold
                 Title.TextColor3 = Color3.new(1,1,1)
+                Title.TextSize = 16 -- [FIXED SIZE]
                 Title.BackgroundTransparency = 1
                 Title.Position = UDim2.new(0,10,0,0)
                 Title.Size = UDim2.new(1,-20,1,0)
@@ -1650,6 +1666,7 @@ function ZuperMing:Window(GuiConfig)
                 OptionSelecting.Font = Enum.Font.GothamBold
                 OptionSelecting.Text = "Select..."
                 OptionSelecting.TextColor3 = Color3.new(1,1,1)
+                OptionSelecting.TextSize = 15 -- [FIXED SIZE]
                 OptionSelecting.TextTransparency = 0.6
                 OptionSelecting.TextXAlignment = Enum.TextXAlignment.Left
                 
@@ -1696,7 +1713,8 @@ function ZuperMing:Window(GuiConfig)
                     btnText.Name = "OptionText"
                     btnText.Text = "  " .. label
                     btnText.Size = UDim2.new(1,0,1,0)
-                    btnText.Font = Enum.Font.GothamBold
+                    btnText.Font = Enum.Font.GothamBold -- [FIXED FONT]
+                    btnText.TextSize = 15 -- [FIXED SIZE]
                     btnText.TextColor3 = Color3.new(1,1,1)
                     btnText.BackgroundTransparency = 1
                     btnText.TextXAlignment = Enum.TextXAlignment.Left
