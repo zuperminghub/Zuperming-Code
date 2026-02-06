@@ -202,7 +202,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         local CalculationWidth = 280 
         local ContentBounds = TextService:GetTextSize(
             NotifyConfig.Content,
-            16, -- [FONT SIZE BESAR]
+            16, 
             Enum.Font.GothamBold,
             Vector2.new(CalculationWidth, 9999) 
         )
@@ -250,7 +250,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         TextLabel.Font = Enum.Font.GothamBold
         TextLabel.Text = NotifyConfig.Title
         TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TextLabel.TextSize = 16 -- [FONT SIZE BESAR]
+        TextLabel.TextSize = 16 
         TextLabel.TextXAlignment = Enum.TextXAlignment.Left
         TextLabel.BackgroundTransparency = 1
         TextLabel.AutomaticSize = Enum.AutomaticSize.X
@@ -261,7 +261,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         TextLabel1.Font = Enum.Font.GothamBold
         TextLabel1.Text = NotifyConfig.Description
         TextLabel1.TextColor3 = NotifyConfig.Color
-        TextLabel1.TextSize = 15 -- [FONT SIZE BESAR]
+        TextLabel1.TextSize = 15 
         TextLabel1.TextXAlignment = Enum.TextXAlignment.Left
         TextLabel1.BackgroundTransparency = 1
         TextLabel1.AutomaticSize = Enum.AutomaticSize.X
@@ -291,7 +291,7 @@ function ZuperMing:MakeNotify(NotifyConfig)
         TextLabel2.Font = Enum.Font.GothamBold
         TextLabel2.Text = NotifyConfig.Content
         TextLabel2.TextColor3 = Color3.fromRGB(180, 180, 180)
-        TextLabel2.TextSize = 16 -- [FONT SIZE BESAR]
+        TextLabel2.TextSize = 16
         TextLabel2.BackgroundTransparency = 1
         TextLabel2.TextXAlignment = Enum.TextXAlignment.Left
         TextLabel2.TextYAlignment = Enum.TextYAlignment.Top
@@ -425,7 +425,7 @@ function ZuperMing:Window(GuiConfig)
     TextLabel.Font = Enum.Font.GothamBold
     TextLabel.Text = GuiConfig.Title
     TextLabel.TextColor3 = GuiConfig.Color
-    TextLabel.TextSize = 16 -- [FONT SIZE BESAR]
+    TextLabel.TextSize = 16 
     TextLabel.TextXAlignment = Enum.TextXAlignment.Center
     TextLabel.BackgroundTransparency = 1
     TextLabel.BorderSizePixel = 0
@@ -968,6 +968,12 @@ function ZuperMing:Window(GuiConfig)
         UIListLayout1.Padding = UDim.new(0, 3)
         UIListLayout1.SortOrder = Enum.SortOrder.LayoutOrder
         UIListLayout1.Parent = ScrolLayers
+        
+        -- [FIX SCROLL BUG]
+        -- Add padding at the bottom of the scroll frame to prevent last item being cut off
+        local TabPadding = Instance.new("UIPadding")
+        TabPadding.Parent = ScrolLayers
+        TabPadding.PaddingBottom = UDim.new(0, 50) 
 
         local Tab = Instance.new("Frame");
         local UICorner3 = Instance.new("UICorner");
@@ -1713,7 +1719,7 @@ function ZuperMing:Window(GuiConfig)
                     btnText.Name = "OptionText"
                     btnText.Text = "  " .. label
                     btnText.Size = UDim2.new(1,0,1,0)
-                    btnText.Font = Enum.Font.GothamBold -- [FIXED FONT]
+                    btnText.Font = Enum.Font.GothamBold
                     btnText.TextSize = 15 -- [FIXED SIZE]
                     btnText.TextColor3 = Color3.new(1,1,1)
                     btnText.BackgroundTransparency = 1
